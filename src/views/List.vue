@@ -1,16 +1,15 @@
 <template>
   <div>
     <h1>
-      Create
+      List
     </h1>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'home',
-  components: {
-
-  }
-}
+    export default {}
 </script>
+
+<style scoped>
+
+</style>
