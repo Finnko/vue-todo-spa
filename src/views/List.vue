@@ -3,6 +3,17 @@
     <h1>
       List
     </h1>
+    <div class="row">
+      <div class="input-field col s5">
+        <select ref="select" id="task-select" v-model="filter">
+          <option value="" disabled selected>Choose status</option>
+          <option value="active">Active</option>
+          <option value="outdated">Outdated</option>
+          <option value="completed">Completed</option>
+        </select>
+        <label for="task-select">Filters</label>
+      </div>
+    </div>
     <table v-if="tasks.length">
       <thead>
       <tr>
@@ -16,7 +27,7 @@
       </thead>
       <tbody>
         <tr
-            v-for="(task, idx) of tasks"
+            v-for="(task, idx) of filteredTasks"
             :key="task.id"
         >
           <td>{{idx + 1}}</td>
@@ -45,10 +56,25 @@
 
 <script>
     export default {
+      data: () => ({
+          filter: null,
+      }),
       computed: {
           tasks() {
               return this.$store.getters.tasks
+          },
+          filteredTasks() {
+              return this.tasks.filter(task => {
+                  if (!this.filter) {
+                      return true;
+                  }
+                  return task.status === this.filter;
+              })
           }
+
+      },
+      mounted() {
+          M.FormSelect.init(this.$refs.select);
       }
     }
 </script>
